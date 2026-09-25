@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 34" preserveAspectRatio="none" shape-rendering="crispEdges">
+  <rect width="37" height="34" fill="#141414"/>
+  <g fill="#4d4d4d">
+    <rect x="-1" y="0.6" width="39" height="5.4"/>
+    <rect x="-1" y="28" width="39" height="5.4"/>
+    <rect x="-1" y="6" width="4" height="22"/>
+    <rect x="34" y="6" width="4" height="22"/>
+  </g>
+  <g fill="#5e5e5e"><rect x="4" y="1" width="3" height="1"/><rect x="11" y="4.5" width="4" height="1"/><rect x="19" y="1" width="2" height="1"/><rect x="25" y="4.5" width="3" height="1"/><rect x="31" y="1" width="4" height="1"/><rect x="7" y="28.6" width="3" height="1"/><rect x="15" y="32" width="3" height="1"/><rect x="22" y="28.6" width="4" height="1"/><rect x="29" y="32" width="3" height="1"/><rect x="0.5" y="9" width="1.5" height="3"/><rect x="1" y="18" width="1.5" height="4"/><rect x="34.5" y="12" width="1.5" height="3"/><rect x="35" y="22" width="1.5" height="3"/></g>
+  <g fill="#f0f0f0"><rect x="1.6" y="2.6" width="3.4" height="1.6"/><rect x="7.7" y="2.6" width="3.4" height="1.6"/><rect x="13.8" y="2.6" width="3.4" height="1.6"/><rect x="19.9" y="2.6" width="3.4" height="1.6"/><rect x="26.0" y="2.6" width="3.4" height="1.6"/><rect x="32.1" y="2.6" width="3.4" height="1.6"/><rect x="1.6" y="29.8" width="3.4" height="1.6"/><rect x="7.7" y="29.8" width="3.4" height="1.6"/><rect x="13.8" y="29.8" width="3.4" height="1.6"/><rect x="19.9" y="29.8" width="3.4" height="1.6"/><rect x="26.0" y="29.8" width="3.4" height="1.6"/><rect x="32.1" y="29.8" width="3.4" height="1.6"/></g>
+</svg>

@@ -1,0 +1,12 @@
+node_modules
+dist
+.DS_Store
+
+# videos in memories/ aren't used by the site
+*.MP4
+*.mp4
+*.MOV
+*.mov
+
+# stock image, not used by the site
+tree/

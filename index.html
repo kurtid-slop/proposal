@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#c7c7c7" />
+    <title>alix</title>
+  </head>
+  <body>
+    <!-- Opening page: the folder -->
+    <main class="screen desktop" id="desktop">
+      <button class="icon" id="folder" type="button" aria-label="Open folder skater-girl">
+        <span class="icon__art" id="folder-art"></span>
+        <span class="icon__label">skater-girl</span>
+      </button>
+    </main>
+
+    <!-- Password prompt for the skater-girl folder -->
+    <div class="lock" id="lock" hidden>
+      <form class="window lock__window" id="lock-form" role="dialog" aria-label="Password required" novalidate>
+        <header class="window__bar">
+          <span class="window__title">skater-girl</span>
+          <button class="window__close" id="lock-close" type="button" aria-label="Cancel">x</button>
+        </header>
+        <div class="lock__body">
+          <label class="lock__label" for="lock-input">enter password</label>
+          <input class="lock__input" id="lock-input" type="password" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
+          <p class="lock__error" id="lock-error" role="alert" hidden></p>
+          <button class="btn btn--primary lock__submit" type="submit">open</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- File explorer -->
+    <main class="screen explorer-screen" id="explorer-screen" hidden>
+      <section class="window explorer" aria-label="skater-girl folder">
+        <header class="window__bar">
+          <span class="window__title" id="explorer-title">skater-girl</span>
+          <button class="window__close" id="explorer-close" type="button" aria-label="Close">x</button>
+        </header>
+        <nav class="window__menu"><span>File</span><span>Edit</span><span>View</span><span>Help</span></nav>
+        <div class="window__toolbar">
+          <button class="nav-btn" id="explorer-back" type="button" aria-label="Back"><svg viewBox="0 0 7 7" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h1v1H3zM2 1h1v1H2zM1 2h1v1H1zM0 3h7v1H0zM1 4h1v1H1zM2 5h1v1H2zM3 6h1v1H3z"/></svg></button>
+          <button class="nav-btn nav-btn--forward" id="explorer-forward" type="button" aria-label="Forward" disabled><svg viewBox="0 0 7 7" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h1v1H3zM2 1h1v1H2zM1 2h1v1H1zM0 3h7v1H0zM1 4h1v1H1zM2 5h1v1H2zM3 6h1v1H3z"/></svg></button>
+          <div class="window__address" id="explorer-address">C:\Users\alix\skater-girl\</div>
+        </div>
+        <div class="window__body explorer__files" data-folder="root">
+          <button class="file" id="open-memories" type="button">
+            <span class="file__art"><img src="icons/reel.png" alt="" /></span>
+            <span class="file__label">memories.exe</span>
+          </button>
+          <button class="file" id="open-scrapbook" type="button">
+            <span class="file__art"><img src="icons/reel.png" alt="" /></span>
+            <span class="file__label">skater-girl.scrapbook</span>
+          </button>
+          <button class="file" id="open-question" type="button">
+            <span class="file__art" id="question-art"></span>
+            <span class="file__label">?.exe</span>
+          </button>
+          <button class="file" id="open-fan-edit" type="button" hidden>
+            <span class="file__art"><img class="file__icon" src="icons/fan-edit.png" alt="" /></span>
+            <span class="file__label">memories-fanedit.exe</span>
+          </button>
+          <button class="file" id="open-letters" type="button">
+            <span class="file__art" id="letters-art"></span>
+            <span class="file__label">letters</span>
+          </button>
+        </div>
+        <!-- C:\Users\alix\skater-girl\letters\ -->
+        <div class="window__body explorer__files" data-folder="letters" hidden>
+          <button class="file" id="open-september" type="button">
+            <span class="file__art"><img class="file__icon" src="icons/letter.png" alt="" /></span>
+            <span class="file__label">september.letter</span>
+          </button>
+        </div>
+        <footer class="window__status" id="explorer-status">4 objects</footer>
+      </section>
+
+    </main>
+
+    <!-- memories.exe: film tapes -->
+    <main class="screen memories" id="memories-screen" hidden>
+      <button class="back" id="memories-close" type="button">&lt; back</button>
+      <p class="memories__hint">dev only: click a photo to crop it</p>
+      <div class="memories__tapes" id="tapes"></div>
+    </main>
+
+    <!-- ?.exe: the message and the question -->
+    <main class="screen proposal" id="proposal-screen" hidden>
+      <button class="back" id="proposal-close" type="button">&lt; back</button>
+      <div class="proposal__content">
+        <div class="proposal__message" id="proposal-message" aria-live="polite"></div>
+        <div class="proposal__question" id="proposal-question" aria-live="polite"></div>
+        <div class="proposal__answers" id="proposal-answers" hidden>
+          <button class="answer answer--yes" id="answer-yes" type="button">yes</button>
+          <button class="answer answer--no" id="answer-no" type="button">no</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- after "yes": the gifs around the yes message -->
+    <main class="screen yay" id="yay-screen" hidden>
+      <div class="hearts" id="hearts" aria-hidden="true"></div>
+      <div class="yay__grid">
+        <img class="yay__gif yay__gif--a" data-src="yay/cat-dance.gif" alt="" width="104" height="112" />
+        <img class="yay__gif yay__gif--b" data-src="yay/cats-kiss.gif" alt="" width="140" height="115" />
+        <div class="yay__message" id="yay-message" aria-live="polite"></div>
+        <img class="yay__gif yay__gif--c" data-src="yay/cat-lick.gif" alt="" width="311" height="373" />
+        <button class="answer answer--yes yay__continue" id="yay-continue" type="button" hidden>continue &gt;</button>
+      </div>
+    </main>
+
+    <!-- shown after too many "no" clicks, then back to the folder -->
+    <main class="screen ok-screen" id="ok-screen" hidden>
+      <div class="ok-screen__text" id="ok-text" aria-live="polite"></div>
+    </main>
+
+    <!-- memories-fanedit.exe: swipe through the posts -->
+    <main class="screen fan-screen" id="fan-screen" hidden>
+      <section class="window fan" aria-label="memories-fanedit.exe">
+        <header class="window__bar">
+          <span class="window__title">memories-fanedit.exe</span>
+          <button class="window__close" id="fan-close" type="button" aria-label="Close">x</button>
+        </header>
+        <div class="fan__viewport" id="fan-viewport">
+          <div class="fan__track" id="fan-track"></div>
+          <p class="fan__empty" id="fan-empty" hidden>add photos to the fan-edit folder</p>
+          <button class="nav-btn fan__arrow fan__arrow--prev" id="fan-prev" type="button" aria-label="Previous post"><svg viewBox="0 0 7 7" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h1v1H3zM2 1h1v1H2zM1 2h1v1H1zM0 3h7v1H0zM1 4h1v1H1zM2 5h1v1H2zM3 6h1v1H3z"/></svg></button>
+          <button class="nav-btn fan__arrow fan__arrow--next" id="fan-next" type="button" aria-label="Next post"><svg viewBox="0 0 7 7" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h1v1H3zM2 1h1v1H2zM1 2h1v1H1zM0 3h7v1H0zM1 4h1v1H1zM2 5h1v1H2zM3 6h1v1H3z"/></svg></button>
+        </div>
+        <footer class="fan__footer">
+          <span class="fan__dots" id="fan-dots" aria-hidden="true"></span>
+          <span class="fan__count" id="fan-count"></span>
+          <button class="btn btn--primary fan__download" id="fan-download" type="button">download</button>
+        </footer>
+      </section>
+    </main>
+
+    <!-- september.letter: the letter on lined paper -->
+    <main class="screen letter-screen" id="letter-screen" hidden>
+      <section class="window letter" aria-label="september.letter">
+        <header class="window__bar">
+          <span class="window__title">september.letter</span>
+          <button class="window__close" id="letter-close" type="button" aria-label="Close">x</button>
+        </header>
+        <div class="window__body letter__paper" id="letter-paper"></div>
+      </section>
+    </main>
+
+    <!-- skater-girl.scrapbook: scrollable scrapbook image -->
+    <main class="screen scrapbook-screen" id="scrapbook-screen" hidden>
+      <section class="window scrapbook" aria-label="skater-girl.scrapbook">
+        <header class="window__bar">
+          <span class="window__title">skater-girl.scrapbook</span>
+          <button class="window__close" id="scrapbook-close" type="button" aria-label="Close">x</button>
+        </header>
+        <div class="window__body scrapbook__scroll" id="scrapbook-scroll">
+          <img class="scrapbook__img" id="scrapbook-img" alt="Scrapbook of photos and notes" width="860" height="12506" />
+        </div>
+      </section>
+    </main>
+
+    <!-- Mini music player: stays on screen on every page once opened -->
+    <aside class="window player" id="player" aria-label="Music player" hidden>
+      <header class="window__bar">
+        <span class="window__title" id="player-bar-title">now playing</span>
+        <span class="player__buttons">
+          <button class="window__close" id="player-min" type="button" aria-label="Minimize player">_</button>
+          <button class="window__close" id="player-close" type="button" aria-label="Close player">x</button>
+        </span>
+      </header>
+      <div class="player__body">
+        <button class="nav-btn player__toggle" id="player-toggle" type="button" aria-label="Play"></button>
+        <div class="player__info">
+          <div class="player__row">
+            <span class="player__title" id="player-title"></span>
+            <span class="player__eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          </div>
+          <input class="player__seek" id="player-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="Seek" />
+          <span class="player__time" id="player-time">0:00 / 0:00</span>
+        </div>
+      </div>
+      <div class="player__volume">
+        <button class="player__mute" id="player-mute" type="button" aria-label="Mute"></button>
+        <input class="player__seek" id="player-volume" type="range" min="0" max="1" step="0.01" aria-label="Volume" />
+        <span class="player__time player__volume-value" id="player-volume-value"></span>
+      </div>
+    </aside>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "proposal",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "heic-convert": "^2.1.0",
+    "sharp": "^0.35.4",
+    "vite": "^7.0.0"
+  }
+}
