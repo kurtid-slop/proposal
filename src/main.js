@@ -14,7 +14,8 @@ import {
 import { typeLines } from './typewriter.js';
 import { buildTapes, stopTapes } from './memories.js';
 import { setupFanEdit } from './fan-edit.js';
-import { SEPTEMBER } from './letters.js';
+import { LETTERS } from './letters.js';
+import { saveImage } from './save-image.js';
 
 const $ = (id) => document.getElementById(id);
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -297,23 +298,68 @@ $('open-letters').addEventListener('click', () => {
   openFolder('letters');
 });
 
-// september.letter -> the letter on lined paper
-$('letter-paper').append(
-  ...SEPTEMBER.map((text) => {
-    const p = document.createElement('p');
-    p.className = 'line';
-    p.textContent = text;
-    return p;
-  }),
-);
+// letters -> the chosen letter on lined paper, with its picture at the bottom
+function showLetter(id) {
+  const letter = LETTERS[id];
+  const paper = $('letter-paper');
+  paper.replaceChildren(
+    ...letter.lines.map((text) => {
+      const p = document.createElement('p');
+      p.className = 'line';
+      p.textContent = text;
+      return p;
+    }),
+  );
 
-$('open-september').addEventListener('click', () => {
+  if (letter.image) {
+    // same look as the fan edit posts: framed picture with a download button
+    const post = document.createElement('figure');
+    post.className = 'window letter__post';
+    post.innerHTML = `
+      <div class="letter__post-image"><img alt="" /></div>
+      <figcaption class="fan__footer">
+        <span class="fan__count"></span>
+        <button class="btn btn--primary fan__download" type="button">download</button>
+      </figcaption>`;
+    post.querySelector('img').src = letter.image;
+    post.querySelector('.fan__count').textContent = letter.title;
+    const button = post.querySelector('button');
+    button.addEventListener('click', () => saveImage(letter.image, letter.image.split('/').pop(), button));
+    paper.append(post);
+  }
+
+  $('letter-title').textContent = letter.title;
+  $('letter-window').setAttribute('aria-label', letter.title);
   $('explorer-screen').hidden = true;
   $('letter-screen').hidden = false;
-  $('letter-paper').scrollTop = 0;
-});
+  paper.scrollTop = 0;
+  playLetterAnimation();
+}
+
+// Opening animation: the envelope pops in and wiggles, then drops away
+// as the letter slides up out of it.
+let letterAnimation = 0;
+async function playLetterAnimation() {
+  const screen = $('letter-screen');
+  const run = ++letterAnimation; // a newer open (or close) cancels this one
+  screen.classList.remove('is-opening', 'is-revealing');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  screen.classList.add('is-opening');
+  await wait(750);
+  if (run !== letterAnimation) return;
+  screen.classList.replace('is-opening', 'is-revealing');
+  await wait(550);
+  if (run !== letterAnimation) return;
+  screen.classList.remove('is-revealing');
+}
+
+for (const icon of document.querySelectorAll('[data-letter]')) {
+  icon.addEventListener('click', () => showLetter(icon.dataset.letter));
+}
 
 $('letter-close').addEventListener('click', () => {
+  letterAnimation++;
+  $('letter-screen').classList.remove('is-opening', 'is-revealing');
   $('letter-screen').hidden = true;
   $('explorer-screen').hidden = false;
 });

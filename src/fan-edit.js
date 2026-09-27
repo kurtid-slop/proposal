@@ -1,6 +1,8 @@
 // "memories-fanedit.exe": Instagram-style posts you swipe through.
 // ✏️ Put the photos in the /fan-edit folder at the project root.
 // They're shown in filename order (01.jpg, 02.jpg, ...). HEIC works too.
+import { saveImage } from './save-image.js';
+
 const files = import.meta.glob(
   '/fan-edit/*.{jpg,jpeg,png,webp,avif,heic,heif,JPG,JPEG,PNG,WEBP,AVIF,HEIC,HEIF}',
   { eager: true, query: '?photo', import: 'default' },
@@ -61,38 +63,11 @@ export function setupFanEdit() {
     $('fan-next').disabled = index >= posts.length - 1;
   };
 
-  // Download the current post. On phones this opens the share sheet
-  // ("Save Image" puts it in Photos); elsewhere it's a normal download.
+  // Download the current post at full size.
   const download = $('fan-download');
-  download.addEventListener('click', async () => {
+  download.addEventListener('click', () => {
     const post = posts[index];
-    if (!post) return;
-    const name = downloadName(post.name);
-    download.disabled = true;
-    download.dataset.label ||= download.textContent;
-    download.textContent = 'saving...';
-    try {
-      const blob = await (await fetch(post.full)).blob();
-      const file = new File([blob], name, { type: blob.type });
-      const phone = window.matchMedia('(hover: none)').matches;
-      if (phone && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file] }).catch(() => {}); // cancelling is fine
-      } else {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = name;
-        document.body.append(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 10000);
-      }
-    } catch {
-      window.open(post.full, '_blank'); // last resort: open it so it can be saved by hand
-    } finally {
-      download.textContent = download.dataset.label;
-      download.disabled = false;
-    }
+    if (post) saveImage(post.full, downloadName(post.name), download);
   });
 
   $('fan-prev').addEventListener('click', () => show(index - 1));

@@ -68,9 +68,13 @@
         </div>
         <!-- C:\Users\alix\skater-girl\letters\ -->
         <div class="window__body explorer__files" data-folder="letters" hidden>
-          <button class="file" id="open-september" type="button">
+          <button class="file" type="button" data-letter="september">
             <span class="file__art"><img class="file__icon" src="icons/letter.png" alt="" /></span>
             <span class="file__label">september.letter</span>
+          </button>
+          <button class="file" type="button" data-letter="09-27-2026">
+            <span class="file__art"><img class="file__icon" src="icons/letter.png" alt="" /></span>
+            <span class="file__label">09-27-2026.letter</span>
           </button>
         </div>
         <footer class="window__status" id="explorer-status">4 objects</footer>
@@ -136,11 +140,12 @@
       </section>
     </main>
 
-    <!-- september.letter: the letter on lined paper -->
+    <!-- letters: the chosen letter on lined paper -->
     <main class="screen letter-screen" id="letter-screen" hidden>
-      <section class="window letter" aria-label="september.letter">
+      <img class="letter__envelope" src="icons/letter.png" alt="" />
+      <section class="window letter" id="letter-window">
         <header class="window__bar">
-          <span class="window__title">september.letter</span>
+          <span class="window__title" id="letter-title"></span>
           <button class="window__close" id="letter-close" type="button" aria-label="Close">x</button>
         </header>
         <div class="window__body letter__paper" id="letter-paper"></div>

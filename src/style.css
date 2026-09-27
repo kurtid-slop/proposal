@@ -840,6 +840,105 @@ input {
   min-height: var(--row);
 }
 
+/* opening animation: envelope pops in, wiggles, drops away; letter slides up */
+.letter-screen {
+  position: relative;
+}
+
+.letter__envelope {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 128px;
+  translate: -50% -50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.letter-screen.is-opening .letter__envelope {
+  display: block;
+  animation: envelope-in 750ms steps(10) forwards;
+}
+
+.letter-screen.is-opening .window.letter {
+  visibility: hidden;
+}
+
+.letter-screen.is-revealing .letter__envelope {
+  display: block;
+  animation: envelope-out 450ms steps(6) forwards;
+}
+
+.letter-screen.is-revealing .window.letter {
+  animation: letter-up 550ms steps(9);
+}
+
+@keyframes envelope-in {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  35% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+  }
+  65% {
+    transform: rotate(-8deg);
+  }
+  80% {
+    transform: rotate(8deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes envelope-out {
+  to {
+    transform: translateY(90px) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes letter-up {
+  from {
+    transform: translateY(45vh) scale(0.5);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* the picture at the bottom of a letter, styled like a fan edit post */
+.window.letter__post {
+  width: min(100%, 420px);
+  margin: var(--row) auto 0;
+  animation: none;
+  line-height: normal;
+}
+
+.letter__post-image {
+  aspect-ratio: 4 / 5;
+  background: var(--paper);
+  border-bottom: 2px solid var(--ink);
+}
+
+.letter__post-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: auto;
+}
+
 /* ---------- scrapbook ---------- */
 
 .scrapbook-screen {
