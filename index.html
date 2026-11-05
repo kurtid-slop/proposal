@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#c7c7c7" />
+    <!-- fonts used by the ported scrapbook diary page -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap" />
     <title>alix</title>
   </head>
   <body>
@@ -45,6 +47,17 @@
           <div class="window__address" id="explorer-address">C:\Users\alix\skater-girl\</div>
         </div>
         <div class="window__body explorer__files" data-folder="root">
+          <button class="file file--new" type="button" data-open-folder="birthday">
+            <span class="file__art"><span id="birthday-art"></span><span class="file__badge">new!</span></span>
+            <span class="file__label">birthday</span>
+          </button>
+          <button class="file" type="button" data-open-folder="us-old">
+            <span class="file__art" id="us-old-art"></span>
+            <span class="file__label">us.old</span>
+          </button>
+        </div>
+        <!-- C:\Users\alix\skater-girl\us.old\ (everything from before) -->
+        <div class="window__body explorer__files" data-folder="us-old" hidden>
           <button class="file" id="open-memories" type="button">
             <span class="file__art"><img src="icons/reel.png" alt="" /></span>
             <span class="file__label">memories.exe</span>
@@ -61,12 +74,12 @@
             <span class="file__art"><img class="file__icon" src="icons/fan-edit.png" alt="" /></span>
             <span class="file__label">memories-fanedit.exe</span>
           </button>
-          <button class="file" id="open-letters" type="button">
+          <button class="file" type="button" data-open-folder="letters">
             <span class="file__art" id="letters-art"></span>
             <span class="file__label">letters</span>
           </button>
         </div>
-        <!-- C:\Users\alix\skater-girl\letters\ -->
+        <!-- C:\Users\alix\skater-girl\us.old\letters\ -->
         <div class="window__body explorer__files" data-folder="letters" hidden>
           <button class="file" type="button" data-letter="september">
             <span class="file__art"><img class="file__icon" src="icons/letter.png" alt="" /></span>
@@ -75,6 +88,17 @@
           <button class="file" type="button" data-letter="09-27-2026">
             <span class="file__art"><img class="file__icon" src="icons/letter.png" alt="" /></span>
             <span class="file__label">09-27-2026.letter</span>
+          </button>
+        </div>
+        <!-- C:\Users\alix\skater-girl\birthday\ -->
+        <div class="window__body explorer__files" data-folder="birthday" hidden>
+          <button class="file" id="open-diary" type="button">
+            <span class="file__art" id="diary-art"></span>
+            <span class="file__label">skater-girl-2.diary</span>
+          </button>
+          <button class="file" type="button" data-letter="birthday">
+            <span class="file__art"><img class="file__icon" src="icons/letter.png" alt="" /></span>
+            <span class="file__label">birthday.letter</span>
           </button>
         </div>
         <footer class="window__status" id="explorer-status">4 objects</footer>
@@ -149,6 +173,27 @@
           <button class="window__close" id="letter-close" type="button" aria-label="Close">x</button>
         </header>
         <div class="window__body letter__paper" id="letter-paper"></div>
+      </section>
+    </main>
+
+    <!-- skater-girl-2.diary: a book ported from the Scrapbook Diary app -->
+    <main class="screen diary-screen" id="diary-screen" hidden>
+      <section class="window diary" id="diary-window">
+        <header class="window__bar">
+          <span class="window__title" id="diary-title"></span>
+          <button class="window__close" id="diary-close" type="button" aria-label="Close">x</button>
+        </header>
+        <div class="window__body diary__body" id="diary-body">
+          <form class="lock__body diary__gate" id="diary-gate" novalidate>
+            <label class="lock__label" for="diary-input">this diary is password protected</label>
+            <input class="lock__input" id="diary-input" type="password" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
+            <p class="lock__error" id="diary-error" role="alert" hidden></p>
+            <button class="btn btn--primary lock__submit" id="diary-unlock" type="submit">unlock</button>
+          </form>
+          <div class="diary-book" id="diary-book" hidden></div>
+          <button class="btn diary__edit-btn" id="diary-edit" type="button" hidden>edit (dev only)</button>
+        </div>
+        <footer class="window__status" id="diary-status"></footer>
       </section>
     </main>
 

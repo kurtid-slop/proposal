@@ -2,6 +2,7 @@
 // Each string in `lines` is a paragraph; '' adds an empty line.
 // `image` (optional) is shown at the bottom with a download button;
 // put the file in public/letters/.
+// `asImage` shows the whole letter as a downloadable picture instead.
 
 export const LETTERS = {
   september: {
@@ -37,5 +38,33 @@ export const LETTERS = {
       '- albert',
     ],
     image: 'letters/09-27-2026.jpg',
+  },
+
+  // Shown as a picture in the new font (newfonts/) instead of typed text.
+  // After changing the text, run `npm run letter-image` to redraw it.
+  birthday: {
+    title: 'birthday.letter',
+    lines: [
+      "To my favorite person on this earth,",
+      '',
+      "Alix, you have spent so much time hiding the parts of yourself you thought were too heavy, too jagged, or too broken to hold. You convinced yourself that if people saw all of you, they would turn away. You wore armor when you deserved a jacket, and you braced for impact in rooms that were only ever trying to offer you warmth.",
+      '',
+      "I need you to hear this as plainly as possible: you were never unlovable. You were simply misunderstood, or carried by people who didn’t know how to hold something as vast, brilliant, and tender as you.",
+      '',
+      "Your scars are not proof that you are ruined; they are proof that you survived. Your fears are not a burden to me—they are just places where I want to hold you a little closer and remind you, “I’ve got you.”",
+      '',
+      "Today, on your birthday, that truth feels even louder. Looking back at the years you spent wondering if you belonged, I am just so profoundly grateful that you kept going. I know you joke about just trying to keep up the illusion of mental stability for your friends, but as someone who has entered your life recently, I need you to know the truth: you make this entire world so much brighter. Even when we first met, you carried a childlike joy that was completely contagious, and I will always remember the beautiful smile, the smirk when you tickle me and the innocence when you fall asleep leaning on me. While it can be hard sometimes, falling in love with you has been the easiest, most natural thing I have ever done. Today isn't just a celebration of another year older—it is a celebration of the fact that you are here, and that I get to be the one who loves you.",
+      '',
+      "You do not have to earn the right to be cared for by shrinking, by fixing, or by performing. You are allowed to be tired. You are allowed to take up space with your weird habits, your quiet anxieties, your sudden laughter, and the days you don't want to get out of bed. All of it belongs here.",
+      '',
+      "I see the soft, quiet heart you keep tucked away behind your defenses. I see the girl that enjoys her matcha earthy with a hint of sweetness. I see the girl that hugs my arm in the back of a cab, gripping for dear life. I see the girl that makes the cutest noises when she is in desperate need of rest. And I love it—not in spite of what you’ve been through, but because of the way you still choose to care, still choose to try, and to still look for a better tomorrow.",
+      '',
+      "You don't have to carry the weight of proving your worth anymore. Just let yourself be known. Let yourself be held. You are so deeply, safely, and entirely worth loving.",
+      '',
+      "I love everything about you Alix,",
+      '',
+      "Albert :3",
+    ],
+    asImage: 'letters/birthday.jpg',
   },
 };

@@ -1,4 +1,4 @@
-// Shrinks the memories and fan-edit photos so they load fast and scroll smoothly
+// Shrinks the memories, fan-edit and diary photos so they load fast and scroll smoothly
 // (a phone photo is ~4000px wide; a film frame shows it at ~200px).
 // Also converts HEIC photos to JPEG, since only Safari can show HEIC.
 // `import url from './photo.heic?photo'` gives a URL to the small JPEG version.
@@ -14,7 +14,7 @@ const VARIANTS = {
   small: { query: '?photo', devPrefix: '/@photo/' },
   full: { query: '?photo-full', devPrefix: '/@photo-full/' },
 };
-const FOLDERS = ['memories', 'fan-edit'];
+const FOLDERS = ['memories', 'fan-edit', 'diary'];
 const isHeic = (file) => /\.hei[cf]$/i.test(file);
 const TYPES = { '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.avif': 'image/avif' };
 const CACHE_DIR = 'node_modules/.cache/photos';
@@ -51,6 +51,21 @@ const toSmallJpeg = (file) =>
       .toBuffer();
   });
 
+// Images with see-through parts (stickers, cut-outs) stay PNG so they keep
+// their transparency; everything else becomes a small JPEG.
+async function toSmall(file) {
+  const transparent = !isHeic(file) && /\.(png|webp|avif)$/i.test(file) && !(await sharp(file).stats()).isOpaque;
+  if (!transparent) return { source: await toSmallJpeg(file), ext: '.jpg', type: 'image/jpeg' };
+  const source = await cachedJpeg(file, 'small-transparent', () =>
+    sharp(file)
+      .rotate()
+      .resize({ width: MAX_SIZE, height: MAX_SIZE, fit: 'inside', withoutEnlargement: true })
+      .png({ compressionLevel: 9 })
+      .toBuffer(),
+  );
+  return { source, ext: '.png', type: 'image/png' };
+}
+
 // Full size: the original file as-is, except HEIC which becomes a full-size JPEG.
 async function toFull(file) {
   if (!isHeic(file)) {
@@ -64,7 +79,7 @@ async function toFull(file) {
 }
 
 async function loadVariant(file, variant) {
-  if (variant === 'small') return { source: await toSmallJpeg(file), ext: '.jpg', type: 'image/jpeg' };
+  if (variant === 'small') return toSmall(file);
   return toFull(file);
 }
 

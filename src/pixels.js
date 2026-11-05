@@ -69,3 +69,49 @@ export const heartSvg = () =>
     '...DPD...',
     '....D....',
   ]);
+
+// Diary (pink cover, heart, label, pages), 18 x 23.
+export const diarySvg = () =>
+  pixelSvg([
+    '.DDDDDDDDDDDDDDD..',
+    '.DMDPPPPPPPPPPPD..',
+    '.DMDPPPPPPPPPPPWD.',
+    '.DMDPPPPPPPPPPPWD.',
+    '.DMDPPPDDPDDPPPWD.',
+    '.DMDPPDCCDCCDPPWD.',
+    '.DMDPPDCCCCCDPPWD.',
+    '.DMDPPPDCCCDPPPWD.',
+    '.DMDPPPPDCDPPPPWD.',
+    '.DMDPPPPPDPPPPPWD.',
+    '.DMDPPPPPPPPPPPWD.',
+    '.DMDPPPPPPPPPPPWD.',
+    '.DMDPPCCCCCCCPPWD.',
+    '.DMDPPPPPPPPPPPWD.',
+    '.DMDPPPPPPPPPPPWD.',
+    '.DMDPPPPPPPPPPPWD.',
+    '.DMDPPPPPPPPPPPWD.',
+    '.DMDPPPPPPPPPPPWD.',
+    '.DMDPPPPPPPPPPPWD.',
+    '.DMDDDDDDDDDDDDWD.',
+    '.DMWWWWWWWWWWWWWD.',
+    '.DDDDDDDDDDDDDDDD.',
+    '..MMMMMMMMMMMMMMMM',
+  ]);
+
+// Present (pink box, yellow ribbon and bow), 24 x 22.
+export const presentSvg = () =>
+  pixelSvg([
+    '....DDDD........DDDD....',
+    '...DYYYYD......DYYYYD...',
+    '...DYCCYYD....DYYCCYD...',
+    '....DYYYYDDYYDDYYYYD....',
+    '.....DDDDDYYYYDDDDD.....',
+    'DDDDDDDDDDDYYDDDDDDDDDDD',
+    'DCCCCCCCCCYYYYCCCCCCCCCD',
+    'DPPPPPPPPPYYYYPPPPPPPPPD',
+    'DDDDDDDDDDDDDDDDDDDDDDDD',
+    '.DMMMMMMMMYYYYMMMMMMMMDM',
+    ...Array(10).fill('.DPPPPPPPPYYYYPPPPPPPPDM'),
+    '.DDDDDDDDDDDDDDDDDDDDDDM',
+    '..MMMMMMMMMMMMMMMMMMMMMM',
+  ]);

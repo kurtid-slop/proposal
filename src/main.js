@@ -1,5 +1,5 @@
 import './style.css';
-import { folderSvg, heartSvg, questionSvg } from './pixels.js';
+import { diarySvg, folderSvg, heartSvg, presentSvg, questionSvg } from './pixels.js';
 import { setupPlayer } from './player.js';
 import {
   FOLDER_PASSWORD,
@@ -15,6 +15,7 @@ import { typeLines } from './typewriter.js';
 import { buildTapes, stopTapes } from './memories.js';
 import { setupFanEdit } from './fan-edit.js';
 import { LETTERS } from './letters.js';
+import { setupDiary } from './diary.js';
 import { saveImage } from './save-image.js';
 
 const $ = (id) => document.getElementById(id);
@@ -23,6 +24,9 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 $('folder-art').innerHTML = folderSvg();
 $('question-art').innerHTML = questionSvg();
 $('letters-art').innerHTML = folderSvg();
+$('us-old-art').innerHTML = folderSvg();
+$('birthday-art').innerHTML = presentSvg();
+$('diary-art').innerHTML = diarySvg();
 
 // Desktop folder -> password prompt -> explorer window.
 // Once unlocked it stays unlocked until the page is reloaded.
@@ -79,11 +83,13 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !$('lock').hidden) closeLock();
 });
 
-// Folders inside the explorer window. Back goes up a folder (or out to the
-// desktop from the top), forward returns to the folder you just left.
+// Folders inside the explorer window. Back goes up to the parent folder (or
+// out to the desktop from the top), forward returns to the folder you just left.
 const FOLDERS = {
   root: { title: 'skater-girl', path: 'C:\\Users\\alix\\skater-girl\\' },
-  letters: { title: 'letters', path: 'C:\\Users\\alix\\skater-girl\\letters\\' },
+  birthday: { title: 'birthday', path: 'C:\\Users\\alix\\skater-girl\\birthday\\', parent: 'root' },
+  'us-old': { title: 'us.old', path: 'C:\\Users\\alix\\skater-girl\\us.old\\', parent: 'root' },
+  letters: { title: 'letters', path: 'C:\\Users\\alix\\skater-girl\\us.old\\letters\\', parent: 'us-old' },
 };
 let currentFolder = 'root';
 let forwardFolder = null;
@@ -106,15 +112,24 @@ function closeExplorer() {
 
 $('explorer-close').addEventListener('click', closeExplorer);
 $('explorer-back').addEventListener('click', () => {
-  if (currentFolder === 'root') return closeExplorer();
+  const parent = FOLDERS[currentFolder].parent;
+  if (!parent) return closeExplorer();
   forwardFolder = currentFolder;
-  openFolder('root');
+  openFolder(parent);
 });
 $('explorer-forward').addEventListener('click', () => {
   const next = forwardFolder;
   forwardFolder = null;
   if (next) openFolder(next);
 });
+
+// folder icons: <button data-open-folder="name">
+for (const icon of document.querySelectorAll('[data-open-folder]')) {
+  icon.addEventListener('click', () => {
+    forwardFolder = null;
+    openFolder(icon.dataset.openFolder);
+  });
+}
 
 // memories.exe -> film tapes page
 $('open-memories').addEventListener('click', () => {
@@ -192,6 +207,8 @@ async function giveUp() {
   await typeLines($('ok-text'), [NO_MESSAGE], { ...TYPING, charDelay: 180, keepCursor: true });
   await wait(1500);
   $('ok-screen').hidden = true;
+  forwardFolder = null;
+  openFolder('root');
   $('desktop').hidden = false;
 }
 
@@ -292,17 +309,37 @@ $('open-fan-edit').addEventListener('click', () => {
   openPlayer(); // plays 4ME 4ME
 });
 
-// letters -> C:\Users\alix\letters\
-$('open-letters').addEventListener('click', () => {
-  forwardFolder = null;
-  openFolder('letters');
+// skater-girl-2.diary -> ported scrapbook diary book (asks for its password)
+const openDiary = setupDiary();
+$('open-diary').addEventListener('click', () => {
+  $('explorer-screen').hidden = true;
+  $('diary-screen').hidden = false;
+  openDiary();
+});
+
+$('diary-close').addEventListener('click', () => {
+  $('diary-screen').hidden = true;
+  $('explorer-screen').hidden = false;
 });
 
 // letters -> the chosen letter on lined paper, with its picture at the bottom
 function showLetter(id) {
   const letter = LETTERS[id];
   const paper = $('letter-paper');
-  paper.replaceChildren(
+  paper.classList.toggle('is-image', Boolean(letter.asImage));
+  if (letter.asImage) {
+    // the whole letter as one picture (drawn by npm run letter-image), with a download button
+    const img = document.createElement('img');
+    img.className = 'letter__image';
+    img.src = letter.asImage;
+    img.alt = letter.lines.join('\n');
+    const button = document.createElement('button');
+    button.className = 'btn btn--primary letter__download';
+    button.type = 'button';
+    button.textContent = 'download';
+    button.addEventListener('click', () => saveImage(letter.asImage, letter.asImage.split('/').pop(), button));
+    paper.replaceChildren(img, button);
+  } else paper.replaceChildren(
     ...letter.lines.map((text) => {
       const p = document.createElement('p');
       p.className = 'line';
@@ -333,7 +370,8 @@ function showLetter(id) {
   $('explorer-screen').hidden = true;
   $('letter-screen').hidden = false;
   paper.scrollTop = 0;
-  playLetterAnimation();
+  if (letter.asImage) cancelLetterAnimation();
+  else playLetterAnimation();
 }
 
 // Opening animation: the envelope pops in and wiggles, then drops away
@@ -357,9 +395,13 @@ for (const icon of document.querySelectorAll('[data-letter]')) {
   icon.addEventListener('click', () => showLetter(icon.dataset.letter));
 }
 
-$('letter-close').addEventListener('click', () => {
+function cancelLetterAnimation() {
   letterAnimation++;
   $('letter-screen').classList.remove('is-opening', 'is-revealing');
+}
+
+$('letter-close').addEventListener('click', () => {
+  cancelLetterAnimation();
   $('letter-screen').hidden = true;
   $('explorer-screen').hidden = false;
 });

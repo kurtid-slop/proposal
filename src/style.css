@@ -376,6 +376,38 @@ input {
   image-rendering: auto;
 }
 
+/* "new!" sticker on a brand-new folder's icon */
+.file--new .file__art {
+  position: relative;
+}
+
+.file__badge {
+  position: absolute;
+  top: -6px;
+  right: -18px;
+  padding: 3px 5px 2px;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--ink);
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--shadow);
+  rotate: 12deg;
+  animation: badge-bob 1.2s steps(2) infinite;
+}
+
+@keyframes badge-bob {
+  50% {
+    translate: 0 -3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .file__badge {
+    animation: none;
+  }
+}
+
 .file__label {
   padding: 2px 6px;
   font-size: 15px;
@@ -799,6 +831,420 @@ input {
   background: var(--ink);
 }
 
+/* ---------- skater-girl-2.diary (ported scrapbook diary book) ---------- */
+
+.diary-screen {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  padding: calc(16px + var(--safe-top)) calc(16px + var(--safe-right)) calc(16px + var(--safe-bottom))
+    calc(16px + var(--safe-left));
+}
+
+.window.diary {
+  width: min(100%, 1100px);
+  height: calc(100dvh - 32px - var(--safe-top) - var(--safe-bottom));
+}
+
+.diary__body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* the dark "desk" the book sits on, like the diary app */
+  background: #1c1418;
+}
+
+.diary__gate {
+  margin: auto;
+  width: min(100%, 360px);
+  background: var(--paper);
+}
+
+.diary__edit-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+}
+
+.diary__edit-btn[hidden] {
+  display: none;
+}
+
+.diary-book {
+  flex: 1;
+  min-height: 0;
+  padding-top: 16px;
+}
+
+.diary-book .diary-date,
+.diary-book .book-nav-label {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: #e9dcc4;
+}
+
+.diary-book .book-nav {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.diary__gate[hidden],
+.diary-book[hidden] {
+  display: none;
+}
+
+/* everything below is the diary app's own look, kept inside the book */
+.diary-book {
+  font-family: 'Lora', serif;
+  color: #3a2c1a;
+  -webkit-font-smoothing: auto;
+}
+
+.diary-book img {
+  image-rendering: auto;
+  -webkit-touch-callout: none;
+}
+
+.diary-book .sb-item {
+  position: absolute;
+}
+
+.diary-book .washi {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 60px;
+  height: 22px;
+  opacity: 0.85;
+  z-index: 1;
+}
+
+.diary-book .polaroid {
+  background: #fffdf6;
+  box-shadow: 0 8px 16px rgba(60, 45, 20, 0.3);
+  padding: 10px 10px 26px;
+  border-radius: 3px;
+}
+
+.diary-book .paper-frame {
+  position: relative;
+  background: #fffdf6;
+  padding: 18px 18px 34px;
+  clip-path: polygon(
+    0% 0%, 16.67% 3.92%, 33.33% 4.33%, 50% 5.71%, 66.67% 3.97%, 83.33% 4.13%, 100% 0%,
+    95.57% 16.67%, 97.1% 33.33%, 95.85% 50%, 95.41% 66.67%, 94.79% 83.33%, 100% 100%,
+    83.33% 97.44%, 66.67% 96.65%, 50% 97.46%, 33.33% 94.72%, 16.67% 95.16%, 0% 100%,
+    2.36% 83.33%, 5.93% 66.67%, 5.87% 50%, 4.68% 33.33%, 4.54% 16.67%
+  );
+  filter: drop-shadow(0 6px 8px rgba(60, 45, 20, 0.35));
+}
+
+.diary-book .polaroid img,
+.diary-book .paper-frame img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.diary-book .plain-photo-img {
+  display: block;
+  width: 100%;
+  border-radius: 2px;
+  box-shadow: 0 6px 14px rgba(60, 45, 20, 0.25);
+}
+
+.diary-book .polaroid.no-shadow,
+.diary-book .plain-photo-img.no-shadow {
+  box-shadow: none;
+}
+
+.diary-book .paper-frame.no-shadow {
+  filter: none;
+}
+
+.diary-book .caption-input {
+  margin-top: 8px;
+  width: 100%;
+  font-size: 18px;
+  color: #4a3826;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  white-space: pre-wrap;
+  min-height: 1em;
+}
+
+.diary-book .bangarang-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 2px;
+  overflow: hidden;
+  background: #12161b;
+  box-shadow: 0 6px 14px rgba(60, 45, 20, 0.25);
+}
+
+.diary-book .bangarang-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.diary-book .bangarang-img-back {
+  opacity: 0;
+}
+
+.diary-book .note-card {
+  position: relative;
+  box-shadow: 0 6px 14px rgba(60, 45, 20, 0.25);
+  padding: 14px;
+  border-radius: 3px;
+  min-height: 90px;
+}
+
+.diary-book .note-style-paper {
+  background-color: #fdf6d8;
+  background-image: linear-gradient(rgba(58, 44, 26, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58, 44, 26, 0.14) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.diary-book .note-style-sticky {
+  box-shadow: 0 5px 12px rgba(30, 20, 5, 0.3);
+}
+
+.diary-book .note-style-sticky::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-style: solid;
+  border-width: 0 24px 24px 0;
+  border-color: transparent rgba(255, 255, 255, 0.6) transparent transparent;
+  filter: drop-shadow(-2px 2px 2px rgba(0, 0, 0, 0.25));
+}
+
+.diary-book .note-text,
+.diary-book .text-box {
+  font-family: 'Lora', serif;
+  font-size: 14px;
+  color: #3a2c1a;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.diary-book .note-text {
+  min-height: 70px;
+}
+
+.diary-book .text-box {
+  min-width: 60px;
+  padding: 2px;
+}
+
+.diary-book .yt-player-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  border-radius: 18px;
+  padding: 14px 16px 16px;
+  background: linear-gradient(135deg, #5a4530, #2e2216);
+  box-shadow: 0 10px 22px rgba(30, 20, 8, 0.35);
+  color: #f3ebda;
+  font-family: 'Lora', serif;
+  text-decoration: none;
+}
+
+.diary-book .yt-header {
+  margin: 0 0 12px;
+}
+
+.diary-book .yt-pill {
+  display: inline-flex;
+  padding: 4px 12px;
+  background: rgba(243, 235, 218, 0.14);
+  border-radius: 999px;
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+  color: #a8e6b0;
+}
+
+.diary-book .yt-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.diary-book .yt-art {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #12161b;
+}
+
+.diary-book .yt-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.diary-book .yt-info {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.diary-book .yt-title,
+.diary-book .yt-artist {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.diary-book .yt-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.diary-book .yt-artist {
+  font-size: 12px;
+  color: #cbb994;
+  margin-top: 2px;
+}
+
+.diary-book .yt-progress {
+  margin-top: 14px;
+}
+
+.diary-book .yt-track {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(243, 235, 218, 0.18);
+}
+
+.diary-book .yt-fill {
+  width: 35%;
+  height: 100%;
+  border-radius: 2px;
+  background: #c98a6b;
+}
+
+.diary-book .yt-open {
+  margin-top: 10px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: #cbb994;
+  text-align: right;
+}
+
+.diary-book .tape-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 6px 22px;
+  background-color: #e6d6ac;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.13) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.035) 0 2px, transparent 2px 11px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 45%, rgba(0, 0, 0, 0.06));
+  clip-path: polygon(
+    7px 0, calc(100% - 6px) 0,
+    100% 9%, calc(100% - 5px) 20%, 100% 31%, calc(100% - 6px) 43%, 100% 55%,
+    calc(100% - 4px) 66%, 100% 78%, calc(100% - 6px) 89%, calc(100% - 3px) 100%,
+    6px 100%,
+    0 91%, 5px 80%, 0 68%, 6px 57%, 1px 45%, 6px 33%, 0 22%, 5px 11%
+  );
+}
+
+.diary-book .tape-text {
+  width: 100%;
+  min-height: 1.2em;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  line-height: 1.15;
+  color: #3a2c1a;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+/* editor (npm run dev only) */
+.diary-book.is-editing .diary-edit-item {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.diary-edit-item.is-selected {
+  outline: 2px dashed var(--pink);
+  outline-offset: 4px;
+}
+
+.diary-edit-item [contenteditable='true'] {
+  cursor: text;
+  user-select: text;
+  outline: 2px solid var(--pink);
+}
+
+.diary-handle {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  background: var(--pink);
+  box-shadow: inset -2px -2px 0 var(--shadow), inset 2px 2px 0 var(--cream), 2px 2px 0 var(--ink);
+  color: var(--ink);
+  font: 16px/1 'Minecraft', monospace;
+}
+
+.diary-edit-item.is-selected > .diary-handle {
+  display: grid;
+  place-items: center;
+}
+
+.diary-handle--delete {
+  top: -16px;
+  left: -16px;
+  cursor: pointer;
+}
+
+.diary-handle--rotate {
+  top: -40px;
+  left: calc(50% - 13px);
+  cursor: grab;
+}
+
+.diary-handle--resize {
+  right: -16px;
+  bottom: -16px;
+  cursor: nwse-resize;
+}
+
+.diary-tools {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-left: 8px;
+}
+
 /* ---------- september.letter ---------- */
 
 .letter-screen {
@@ -915,6 +1361,26 @@ input {
   to {
     transform: none;
   }
+}
+
+/* a letter shown as one picture (birthday.letter): no ruled background,
+   the picture fills the width, download button under it */
+.letter__paper.is-image {
+  padding: 0 0 160px;
+  background: var(--paper);
+  text-align: center;
+}
+
+.letter__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: auto;
+  border-bottom: 2px solid var(--ink);
+}
+
+.letter__download {
+  margin-top: 16px;
 }
 
 /* the picture at the bottom of a letter, styled like a fan edit post */
