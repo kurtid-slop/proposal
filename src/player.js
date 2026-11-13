@@ -33,6 +33,7 @@ export function setupPlayer() {
   const audio = new Audio();
   audio.loop = true;
   audio.preload = 'none';
+  let song = SONG; // the song loaded now (a letter can bring its own)
 
   const toggle = $('player-toggle');
   const seek = $('player-seek');
@@ -92,8 +93,11 @@ export function setupPlayer() {
   applyVolume();
   showVolume();
 
-  $('player-title').textContent = SONG.title;
-  $('player-bar-title').textContent = `now playing: ${SONG.title}`;
+  const showTitle = () => {
+    $('player-title').textContent = song.title;
+    $('player-bar-title').textContent = `now playing: ${song.title}`;
+  };
+  showTitle();
 
   const update = () => {
     const playing = !audio.paused && !audio.error;
@@ -113,7 +117,7 @@ export function setupPlayer() {
   audio.addEventListener('timeupdate', progress);
   audio.addEventListener('loadedmetadata', progress);
   audio.addEventListener('error', () => {
-    $('player-time').textContent = `missing ${SONG.src}`;
+    $('player-time').textContent = `missing ${song.src}`;
     update();
   });
 
@@ -140,9 +144,14 @@ export function setupPlayer() {
 
   update();
 
-  // Called by the music icon in the explorer.
-  return function openPlayer() {
-    if (!audio.src) audio.src = SONG.src;
+  // Opens the player and plays `next` (4ME 4ME by default), starting it
+  // from the top if a different song was playing.
+  return function openPlayer(next = SONG) {
+    if (!audio.src || next !== song) {
+      song = next;
+      audio.src = song.src;
+      showTitle();
+    }
     player.hidden = false;
     play();
   };

@@ -1,7 +1,8 @@
 // npm run letter-image
-// Draws each letter that has `asImage` (src/letters.js) in the LiebeHeide
-// handwriting font, solid INK on a plain PAPER background, and saves it to
-// public/<asImage>. It uses headless Chrome so it comes out the same everywhere.
+// Draws each letter that has `asImage` (src/letters.js) in solid INK on a plain
+// PAPER background, and saves it to public/<asImage>. The font is the LiebeHeide
+// handwriting font, or the letter's own `font` (any font installed on this Mac,
+// e.g. "Georgia, serif"). It uses headless Chrome so it comes out the same everywhere.
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -29,11 +30,12 @@ const page = (letter) => `<!doctype html>
     box-sizing: border-box;
     padding: 80px 72px;
     background: ${PAPER};
-    font: 44px/1.2 'LiebeHeide', cursive;
+    font: ${letter.font ? `30px/1.5 ${letter.font}` : "44px/1.2 'LiebeHeide', cursive"};
+    color: ${INK};
   }
   /* the font's glyphs are blue-ink pictures, so CSS colour can't change them;
      this filter repaints every glyph in one solid colour, a little bolder */
-  #text { filter: url(#solid); }
+  ${letter.font ? '' : '#text { filter: url(#solid); }'}
   p { margin: 0; min-height: 1.2em; }
 </style>
 <svg width="0" height="0" style="position:absolute">
@@ -74,7 +76,7 @@ try {
     await send('Page.navigate', { url: pathToFileURL(html).href });
     await sleep(500);
     const { result } = await send('Runtime.evaluate', {
-      expression: `document.fonts.ready.then(() => document.fonts.check("44px LiebeHeide") ? document.getElementById('paper').offsetHeight : 0)`,
+      expression: `document.fonts.ready.then(() => (${Boolean(letter.font)} || document.fonts.check("44px LiebeHeide")) ? document.getElementById('paper').offsetHeight : 0)`,
       awaitPromise: true,
     });
     if (!result.value) throw new Error('the font did not load');

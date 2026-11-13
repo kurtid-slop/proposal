@@ -3,6 +3,7 @@
 // `image` (optional) is shown at the bottom with a download button;
 // put the file in public/letters/.
 // `asImage` shows the whole letter as a downloadable picture instead.
+//   It's drawn in the LiebeHeide font unless `font` names another one.
 
 export const LETTERS = {
   september: {
@@ -66,5 +67,27 @@ export const LETTERS = {
       "Albert :3",
     ],
     asImage: 'letters/birthday.jpg',
+  },
+  // A picture like birthday.letter, but in Georgia.
+  // Run `npm run letter-image` after changing the text.
+  '11-13-2026': {
+    title: '11-13-2026.letter',
+    lines: [
+      "Dear Alix,",
+      "",
+      "I’ve been replaying this moment in my head for so long that writing it down almost feels unreal. For every single countdown on our calendars, and every late-night phone call ending with a heavy \"I love you,\" I always find myself whispering, \"I wish you were next to me.\"",
+      "",
+      "Every day, I look forward to walking through arrivals. I've imagined every angle, possibility, and reaction of you turning the corner and finally seeing me there. I am impatiently waiting for us to embrace each other in the warmth we've so desperately waited for, and I've dreamt about what that car ride back to your house will be like. All I want in that car is you next to me. I want you to lean into me so you can rest your head on my shoulder, I want you to hug my arm for dear life just like our first taxi ride from Blok M, and I want us to share our heartbeats with the same breaths. Most importantly, I want to see your smile—the one thing I've missed the most this entire time we've been apart.",
+      "",
+      "Your smile is going to light me up in the dark back seat of your car. No matter how consumed we are in darkness, the warmth you give me will be radiating like the sun, and everything inside me—my fears, doubts, and insecurities—will melt away. The moment I see your eyes look at me and give me the smile I fell in love with, I will finally feel whole again, and in that moment I'll be able to fully love every facet of you.",
+      "",
+      "Writing this letter has made me cry every time I tried to write it. I tried so hard to write it for your birthday, but I couldn't stop crying knowing the amount of pain we've both put each other through. While the tears running down my cheek are something you might want to comfort me for, I want you to know that the price of admission for love is pain—and I have felt so much pain these past three months. But I realise it hurts this much because my love for you is indescribable, and I wouldn't want to do it with anyone else.",
+      "",
+      "I love you so much,",
+      "",
+      "Albert",
+    ],
+    asImage: 'letters/11-13-2026.jpg',
+    font: 'Georgia, serif',
   },
 };

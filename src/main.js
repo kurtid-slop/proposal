@@ -32,7 +32,17 @@ $('diary-art').innerHTML = diarySvg();
 // Once unlocked it stays unlocked until the page is reloaded.
 let unlocked = false;
 
+// Surf starts in the mini player the first time she enters the folder.
+// It starts before the animation, while the tap still counts (phones block
+// sound that isn't started by a tap).
+const SURF = { title: 'Surf', src: 'music/surf.mp3' };
+let surfStarted = false;
+
 async function openDesktopFolder() {
+  if (!surfStarted) {
+    surfStarted = true;
+    openPlayer(SURF);
+  }
   $('desktop').classList.add('is-leaving');
   await wait(450);
   $('desktop').hidden = true;
@@ -169,7 +179,8 @@ window.addEventListener('resize', () => {
   }, 200);
 });
 
-// mini music player; opened by memories-fanedit.exe, stays visible on every page
+// mini music player; plays Surf on entering the folder and 4ME 4ME from
+// memories-fanedit.exe; stays visible on every page
 const openPlayer = setupPlayer();
 
 // ?.exe -> message typed out, then the question
