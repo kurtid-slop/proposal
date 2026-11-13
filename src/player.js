@@ -3,7 +3,7 @@
 export const SONG = {
   title: '4ME 4ME',
   src: 'music/music.mp3',
-  volume: 0.6, // starting volume, 0 (silent) to 1 (full)
+  volume: 0.3, // starting volume, 0 (silent) to 1 (full)
 };
 
 const VOLUME_KEY = 'player-volume';

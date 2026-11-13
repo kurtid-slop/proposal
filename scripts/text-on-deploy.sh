@@ -26,18 +26,18 @@ on run argv
   tell application "Messages"
     -- iMessage is free (over the internet); plain SMS through the iPhone is the
     -- fallback. Some accounts can't be read, so check them one by one.
-    set imessage to missing value
-    set sms to missing value
+    set imAccount to missing value
+    set smsAccount to missing value
     repeat with i from 1 to (count accounts)
       try
         if enabled of account i then
-          if service type of account i is iMessage then set imessage to account i
-          if service type of account i is SMS then set sms to account i
+          if service type of account i is iMessage then set imAccount to account i
+          if service type of account i is SMS then set smsAccount to account i
         end if
       end try
     end repeat
-    set via to imessage
-    if via is missing value then set via to sms
+    set via to imAccount
+    if via is missing value then set via to smsAccount
     if via is missing value then error "no iMessage or SMS account in Messages"
     send (item 2 of argv) to participant (item 1 of argv) of via
   end tell
